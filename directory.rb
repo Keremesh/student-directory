@@ -26,6 +26,7 @@ end
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
+  puts "3. Save the list to students.csv"
   puts "9. Exit"
 end
 
@@ -41,6 +42,8 @@ def process(selection)
       input_students
     when "2"
       show_students
+    when "3"
+      save_students
     when "9"    
       exit
     else 
@@ -61,6 +64,29 @@ end
 
 def print_footer
   puts "Overall, we have #{@students.count} great students"
+end
+
+def save_students
+    #open file for writing
+    file = File.open("students.csv", "w") #When we open a file, the open() 
+    #method returns us a reference to the file that we can save as a variable 
+    #called 'file'. 
+    #Then we iterate over the array of students, processing one student at a time.
+    @students.each do |student|
+      student_data = [student[:name], student[:cohort]] #Our data is stored in a hash, 
+      # therefore we need to convert the hash into a string to write to the file. An easy 
+      # way to do it is to put all elements of the hash into an array and then convert it 
+      # all to the string. An easy way to do it is to put all elements of the hash into an 
+      # array and then convert it all to the string.  
+      # On every iteration we create a new array with the student name and the cohort, 
+      # that is, the information we want to save to the file. We do this in order to 
+      # convert it to a comma-separated string on the next line. 
+      csv_line = student_data.join(",")
+      file.puts csv_line #Finally, we write the csv line to the file using the 
+      # familiar puts() method, except we call it on a file, so it writes to the 
+      # file and not on the screen.
+    end
+    file.close #Every time you open a file, it needs to be closed.
 end
 
 interactive_menu
